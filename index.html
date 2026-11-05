@@ -330,7 +330,7 @@
     font-size:11.5px; font-weight:700; color:var(--vermillion);
     background:rgba(187,68,48,.09); padding:2px 9px; border-radius:999px;
   }
-  .transit-card:not([style]) a{color:var(--gold); border-bottom-color:rgba(201,162,39,.5);}
+  .transit-card:not([style]):not(.lodge) a{color:var(--gold); border-bottom-color:rgba(201,162,39,.5);}
   .transit-card a.time-chip{color:#F4EFE3; border:1px solid rgba(244,239,227,0.2);}
 
   .route-strip{
@@ -364,6 +364,33 @@
   .map-fig img{width:100%; height:auto; display:block;}
   .map-fig .cap{padding:6px 10px; font-size:11.5px; color:#8a8171; background:#fffdf8;}
   footer{line-height:1.9;}
+
+  /* lodging cards */
+  .transit-card.lodge{background:#fffdf8; color:var(--ink); border:1px solid #e7ddc3;}
+  .transit-card.lodge h3{color:var(--indigo-deep);}
+  .transit-card.lodge .desc{color:#8a8171; margin-bottom:16px;}
+  .transit-card.lodge .transit-col h4{color:var(--vermillion);}
+  .transit-card.lodge .food-table{margin:0;}
+  .transit-card.lodge .transit-note{border-top-color:#e2d8bd; color:#8a8171;}
+  .transit-card.lodge .transit-note b{color:var(--vermillion);}
+
+  /* cost section */
+  .cost-kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:14px;}
+  @media (max-width:600px){ .cost-kpis{grid-template-columns:1fr 1fr;} .cost-kpis .kpi.main{grid-column:1 / -1;} }
+  .kpi{background:#fffdf8; border:1px solid #e7ddc3; border-radius:12px; padding:14px 16px;}
+  .kpi .k-label{font-size:12px; font-weight:700; color:#8a8171; letter-spacing:.04em;}
+  .kpi .k-value{font-family:'Noto Sans TC',sans-serif; font-weight:700; font-size:24px; line-height:1.3; color:var(--indigo-deep); margin-top:4px;}
+  .kpi .k-note{font-size:11.5px; color:#a49b86; margin-top:2px;}
+  .kpi .k-value.multi{font-size:18px;}
+  .kpi.main{background:var(--indigo-deep); border-color:var(--indigo-deep);}
+  .kpi.main .k-label{color:var(--gold);}
+  .kpi.main .k-value{color:#fff;}
+  .kpi.main .k-note{color:#c6cfdb;}
+  .cost-table th.num, .cost-table td.num{text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums;}
+  .cost-table .amt.pending{color:#a49b86; font-weight:400;}
+  .cost-table td.num small.per{display:block; font-size:11.5px; font-weight:400; color:#8a8171; margin-top:2px;}
+  .cost-table td.num small.per:empty{display:none;}
+  .nb{white-space:nowrap;}
   .food-table td.nw, .food-table th.nw{white-space:nowrap;}
   .food-table td.sname{font-weight:700; color:var(--indigo-deep);}
   .food-table td.sname small{display:block; font-weight:400; color:#8a8171; font-size:12px; margin-top:2px;}
@@ -406,8 +433,8 @@
     <div class="ticket">
       <div class="tlabel">♨ 住宿 2｜洞爺湖</div>
       <h3>The Lake Suite 湖の栖</h3>
-      <div class="row"><span>入住</span><b>11/28（六）</b></div>
-      <div class="row"><span>退房</span><b>11/30（一）・2 晚</b></div>
+      <div class="row"><span>入住</span><b>11/28（六）15:00–19:00</b></div>
+      <div class="row"><span>退房</span><b>11/30（一）11:00・2 晚</b></div>
       <div class="row"><span>房型</span><b>2 間露天溫泉房・4＋3 人</b></div>
       <div class="row"><span>餐食</span><b>✅ 懷石晚餐＋早餐</b></div>
       <div class="foot">洞爺湖溫泉｜客房附露天溫泉</div>
@@ -418,7 +445,7 @@
       <div class="row"><span>入住</span><b>11/30（一）15:00–21:00</b></div>
       <div class="row"><span>退房</span><b>12/3（四）10:00 前・3 晚</b></div>
       <div class="row"><span>房型</span><b>1 間平房小屋・7 人</b></div>
-      <div class="foot">County Inn Milky House｜需與住宿方約定入住時間</div>
+      <div class="foot">Country Inn Milky House｜需約定入住時間</div>
     </div>
     <div class="ticket">
       <div class="tlabel">🏨 住宿 4｜札幌</div>
@@ -426,13 +453,13 @@
       <div class="row"><span>入住</span><b>12/3（四）</b></div>
       <div class="row"><span>退房</span><b>12/5（六）・2 晚</b></div>
       <div class="row"><span>人數</span><b>7 位成人</b></div>
-      <div class="foot">札幌｜Booking.com</div>
+      <div class="foot">札幌・薄野（Susukino）</div>
     </div>
   </div>
 
   <div class="wrap">
 
-    <div class="section-title"><h2>住宿總覽</h2><div class="rule"></div></div>
+    <div class="section-title"><h2>住宿資訊</h2><div class="rule"></div></div>
 
     <div class="tips">
       <div class="food-table-wrap">
@@ -452,37 +479,128 @@
       </ul>
     </div>
 
-    <div class="transit-card" style="background:#fffdf8; color:var(--ink); border:1px solid #e7ddc3;">
-      <h3 style="color:var(--indigo-deep);">♨ 湖の栖・訂房內容</h3>
-      <div class="desc" style="color:#8a8171;">The Lake Suite 湖の栖（ザ・レイクスイート このすみか），位於洞爺湖溫泉，每間客房都附露天溫泉</div>
+    <div class="transit-card lodge">
+      <h3>🏨 住宿 1｜E-us Naebo Station 402</h3>
+      <div class="desc">札幌・苗穗｜11/26（四）→ 11/28（六），2 晚｜✅ 已訂房</div>
       <div class="transit-grid">
         <div class="transit-col">
-          <h4 style="color:var(--vermillion);">🍱 方案內容</h4>
-          <ol style="color:var(--ink);">
-            <li>✅ <b>已訂房</b>：2 間<b>【禁煙】附露天溫泉露台房</b>（A 房 4 人、B 房 3 人），11/28–11/30 住 2 晚</li>
-            <li>方案：【標準】水畔露台餐廳「<b>The Toya</b>」日式懷石晚餐（日式宴會料理）＋早餐</li>
-            <li>免費 WiFi，線上預付</li>
-          </ol>
-          <div class="time-chip" style="background:rgba(187,68,48,0.08); border-color:rgba(187,68,48,0.2); color:var(--vermillion);">⏰ 2026/11/14 23:59（當地時間）前可免費取消</div>
-        </div>
-        <div class="transit-col">
-          <h4 style="color:var(--vermillion);">💴 價格參考（2 晚，含稅及服務費）</h4>
+          <h4>📋 訂房內容</h4>
           <div class="food-table-wrap">
           <table class="food-table">
-            <tr><th>房間</th><th>會員價</th><th>標準價</th></tr>
-            <tr><td class="fname">A 房（4人）</td><td class="nw">NT$66,689</td><td class="nw">NT$70,199</td></tr>
-            <tr><td class="fname">B 房（3人）</td><td class="nw">NT$51,351</td><td class="nw">NT$54,053</td></tr>
-            <tr class="price-total"><td class="fname">合計</td><td class="nw">NT$118,040</td><td class="nw">NT$124,252</td></tr>
-            <tr><td class="fname">每人平均</td><td class="nw">NT$16,863</td><td class="nw">NT$17,750</td></tr>
+            <tr><td class="fname">房型</td><td>整間公寓 1 間</td></tr>
+            <tr><td class="fname">人數</td><td>7 位成人</td></tr>
+            <tr><td class="fname">入住</td><td>11/26（四）<b>15:00–22:00</b></td></tr>
+            <tr><td class="fname">退房</td><td>11/28（六）<b>10:00 前</b></td></tr>
           </table>
           </div>
-          <div style="font-size:12px; color:#8a8171; margin-top:4px;">依訂房頁截圖整理，實際金額以訂房確認信為準</div>
+        </div>
+        <div class="transit-col">
+          <h4>📍 位置與交通</h4>
+          <div class="food-table-wrap">
+          <table class="food-table">
+            <tr><td class="fname">地址</td><td><span class="nb">〒060-0033</span> 北海道札幌市中央区北3条東<span class="nb">10丁目18-4</span></td></tr>
+            <tr><td class="fname">交通</td><td>JR 苗穗站步行約 2–4 分鐘</td></tr>
+            <tr><td class="fname">停車</td><td>待確認</td></tr>
+          </table>
+          </div>
+          <div style="margin-top:10px;"><a class="pin" href="https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%E6%9C%AD%E5%B9%8C%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E5%8C%973%E6%9D%A1%E6%9D%B110%E4%B8%81%E7%9B%AE18-4" target="_blank" rel="noopener">📍 Google 地圖</a></div>
         </div>
       </div>
-      <div class="transit-note" style="border-top-color:#e2d8bd; color:#8a8171;">
-        <b style="color:var(--vermillion);">連結：</b><a href="https://konosumika.com/zh_tw/spa?tripla_booking_widget_open=search" target="_blank" rel="noopener">官網訂房</a>　｜　<a href="https://maps.app.goo.gl/xnvZR7JC5JyrhTZp8" target="_blank" rel="noopener">Google 地圖</a>
-      </div>
+      <div class="transit-note"><b>備註：</b>訂房確認上的地址寫「サンライズ」，是這棟大樓的舊名</div>
     </div>
+    <div class="transit-card lodge">
+      <h3>♨ 住宿 2｜The Lake Suite 湖の栖</h3>
+      <div class="desc">洞爺湖溫泉｜11/28（六）→ 11/30（一），2 晚｜✅ 已訂房</div>
+      <div class="transit-grid">
+        <div class="transit-col">
+          <h4>📋 訂房內容</h4>
+          <div class="food-table-wrap">
+          <table class="food-table">
+            <tr><td class="fname">房型</td><td>【禁煙】附露天溫泉露台房 × 2 間</td></tr>
+            <tr><td class="fname">人數</td><td>A 房 4 人、B 房 3 人</td></tr>
+            <tr><td class="fname">方案</td><td>【標準】水畔露台餐廳「<b>The Toya</b>」懷石晚餐（日式宴會料理）＋早餐</td></tr>
+            <tr><td class="fname">入住</td><td>11/28（六）<b>15:00–19:00</b></td></tr>
+            <tr><td class="fname">退房</td><td>11/30（一）<b>11:00 前</b></td></tr>
+            <tr><td class="fname">取消</td><td>11/14 23:59（當地時間）前免費取消</td></tr>
+          </table>
+          </div>
+        </div>
+        <div class="transit-col">
+          <h4>📍 位置與交通</h4>
+          <div class="food-table-wrap">
+          <table class="food-table">
+            <tr><td class="fname">地址</td><td><span class="nb">〒049-5731</span> 北海道有珠郡壮瞥町洞爺湖温泉<span class="nb">7-1</span></td></tr>
+            <tr><td class="fname">電話</td><td>0142-82-4121</td></tr>
+            <tr><td class="fname">停車</td><td>免費</td></tr>
+            <tr><td class="fname">設施</td><td>每間客房都有露天溫泉、可看湖景；免費 WiFi</td></tr>
+          </table>
+          </div>
+          <div style="margin-top:10px;"><a class="pin" href="https://konosumika.com/zh_tw/spa?tripla_booking_widget_open=search" target="_blank" rel="noopener">🔗 官網訂房頁</a>　<a class="pin" href="https://maps.app.goo.gl/xnvZR7JC5JyrhTZp8" target="_blank" rel="noopener">📍 Google 地圖</a></div>
+        </div>
+      </div>
+      <div class="transit-note"><b>提醒：</b>最晚 <b>19:00 前</b>要 check-in，含晚餐方案別太晚到</div>
+    </div>
+    <div class="transit-card lodge">
+      <h3>🏔 住宿 3｜Country Inn Milky House</h3>
+      <div class="desc">二世谷・安努普利｜11/30（一）→ 12/3（四），3 晚｜✅ 已訂房</div>
+      <div class="transit-grid">
+        <div class="transit-col">
+          <h4>📋 訂房內容</h4>
+          <div class="food-table-wrap">
+          <table class="food-table">
+            <tr><td class="fname">名稱</td><td>銀河住宿加早餐旅館（Booking 中文名）／カントリーイン ミルキーハウス</td></tr>
+            <tr><td class="fname">房型</td><td>平房小屋 1 間</td></tr>
+            <tr><td class="fname">人數</td><td>7 位成人</td></tr>
+            <tr><td class="fname">入住</td><td>11/30（一）<b>15:00–21:00</b></td></tr>
+            <tr><td class="fname">退房</td><td>12/3（四）<b>10:00 前</b></td></tr>
+          </table>
+          </div>
+        </div>
+        <div class="transit-col">
+          <h4>📍 位置與交通</h4>
+          <div class="food-table-wrap">
+          <table class="food-table">
+            <tr><td class="fname">地址</td><td><span class="nb">〒048-1511</span> 北海道虻田郡ニセコ町字ニセコ<span class="nb">482-1</span></td></tr>
+            <tr><td class="fname">電話</td><td>0136-58-2200</td></tr>
+            <tr><td class="fname">停車</td><td>免費（約 15 台）</td></tr>
+            <tr><td class="fname">位置</td><td>安努普利滑雪場山腳，走路就到雪場</td></tr>
+          </table>
+          </div>
+          <div style="margin-top:10px;"><a class="pin" href="https://www.booking.com/hotel/jp/county-inn-milky-house.zh-tw.html" target="_blank" rel="noopener">🔗 Booking.com 頁面</a>　<a class="pin" href="https://www.google.com/maps/search/?api=1&query=%E3%82%AB%E3%83%B3%E3%83%88%E3%83%AA%E3%83%BC%E3%82%A4%E3%83%B3%20%E3%83%9F%E3%83%AB%E3%82%AD%E3%83%BC%E3%83%8F%E3%82%A6%E3%82%B9%20%E3%83%8B%E3%82%BB%E3%82%B3" target="_blank" rel="noopener">📍 Google 地圖</a></div>
+        </div>
+      </div>
+      <div class="transit-note"><b>⚠️ 提醒：</b>訂房後需和住宿方<b>約定入住時間</b>，可用 Booking 訊息或電話聯絡</div>
+    </div>
+    <div class="transit-card lodge">
+      <h3>🏨 住宿 4｜Zabo Hills 203</h3>
+      <div class="desc">札幌・薄野｜12/3（四）→ 12/5（六），2 晚｜✅ 已訂房</div>
+      <div class="transit-grid">
+        <div class="transit-col">
+          <h4>📋 訂房內容</h4>
+          <div class="food-table-wrap">
+          <table class="food-table">
+            <tr><td class="fname">房型</td><td>整間公寓（3 房，約 78㎡）</td></tr>
+            <tr><td class="fname">人數</td><td>7 位成人</td></tr>
+            <tr><td class="fname">入住</td><td>12/3（四）・時間待補</td></tr>
+            <tr><td class="fname">退房</td><td>12/5（六）・時間待補</td></tr>
+          </table>
+          </div>
+        </div>
+        <div class="transit-col">
+          <h4>📍 位置與交通</h4>
+          <div class="food-table-wrap">
+          <table class="food-table">
+            <tr><td class="fname">地址</td><td><span class="nb">〒060-0056</span> 北海道札幌市中央区南6条東<span class="nb">2-2-2</span></td></tr>
+            <tr><td class="fname">交通</td><td>地下鐵豐水薄野站步行約 2–4 分鐘</td></tr>
+            <tr><td class="fname">停車</td><td>免費私人停車位</td></tr>
+          </table>
+          </div>
+          <div style="margin-top:10px;"><a class="pin" href="https://www.booking.com/Share-0KEf1W" target="_blank" rel="noopener">🔗 Booking.com 頁面</a>　<a class="pin" href="https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%E6%9C%AD%E5%B9%8C%E5%B8%82%E4%B8%AD%E5%A4%AE%E5%8C%BA%E5%8D%976%E6%9D%A1%E6%9D%B12-2-2" target="_blank" rel="noopener">📍 Google 地圖</a></div>
+        </div>
+      </div>
+      <div class="transit-note"><b>備註：</b>入住／退房時間看 Booking 訂房確認信，補上後更新</div>
+    </div>
+    <div style="margin-top:12px; font-size:12px; color:#a49b86; text-align:center;">地址、電話、停車等資訊整理自訂房網站，實際以訂房確認信為準</div>
 
     <div class="section-title"><h2>十日路線</h2><div class="rule"></div></div>
 
@@ -588,6 +706,7 @@
               <div class="day-sec-label"><span class="ico">♨️</span><span class="txt">入住</span><span class="line"></span></div>
               <ul>
                 <li><b>The Lake Suite 湖の栖</b>（洞爺湖溫泉），住 2 晚（11/28–11/30）</li>
+                <li>Check-in <b>15:00–19:00</b>，最晚 19:00 前要到</li>
                 <li>晚餐：水畔露台餐廳「<b>The Toya</b>」日式懷石料理（含在住宿方案內）</li>
               </ul>
               <div style="margin-top:8px;"><a class="pin" href="https://maps.app.goo.gl/xnvZR7JC5JyrhTZp8" target="_blank" rel="noopener">📍 Google 地圖</a></div>
@@ -612,7 +731,7 @@
             <div class="day-section">
               <div class="day-sec-label"><span class="ico">🏨</span><span class="txt">住宿</span><span class="line"></span></div>
               <ul>
-                <li><b>The Lake Suite 湖の栖</b>（第 2 晚），訂房內容與價格見上方「住宿總覽」</li>
+                <li><b>The Lake Suite 湖の栖</b>（第 2 晚），訂房內容見上方「住宿資訊」</li>
               </ul>
             </div>
             <div class="day-section">
@@ -655,16 +774,16 @@
               <div class="food-table-wrap">
               <table class="food-table">
                 <tr><th>項目</th><th>內容</th></tr>
-                <tr><td class="fname">住宿</td><td><b>銀河住宿加早餐旅館</b>（County Inn Milky House）</td></tr>
+                <tr><td class="fname">住宿</td><td><b>銀河住宿加早餐旅館</b>（Country Inn Milky House）</td></tr>
                 <tr><td class="fname">入住</td><td>11/30（一）<b>15:00–21:00</b></td></tr>
                 <tr><td class="fname">退房</td><td>12/3（四）<b>10:00 前</b></td></tr>
                 <tr><td class="fname">房型</td><td>1 間平房小屋，7 位成人，3 晚</td></tr>
-                <tr><td class="fname">地址</td><td>北海道 二世谷（Niseko）482-1 Niseko cho Aza</td></tr>
+                <tr><td class="fname">地址</td><td><span class="nb">〒048-1511</span> 北海道虻田郡ニセコ町字ニセコ<span class="nb">482-1</span></td></tr>
               </table>
               </div>
               <div style="margin-top:8px;"><a class="pin" href="https://www.booking.com/hotel/jp/county-inn-milky-house.zh-tw.html" target="_blank" rel="noopener">🔗 Booking.com 頁面</a></div>
             </div>
-            <div class="highlight">⚠️ 訂房後需和住宿方<b>約定入住時間</b>，出發前記得先聯絡</div>
+            <div class="highlight">⚠️ 訂房後需和住宿方<b>約定入住時間</b>，出發前記得先聯絡（電話 0136-58-2200）</div>
           </div>
         </details>
       </div>
@@ -685,6 +804,7 @@
               <div class="day-sec-label"><span class="ico">⛷️</span><span class="txt">滑雪場</span><span class="line"></span></div>
               <ul>
                 <li><b>二世谷安努普利滑雪場</b>（Niseko Annupuri）</li>
+                <li>住宿 Country Inn Milky House 就在雪場山腳，走路就到</li>
               </ul>
               <div style="margin-top:4px;"><a class="pin" href="https://annupuri.info/en/" target="_blank" rel="noopener">🔗 官網 annupuri.info</a></div>
             </div>
@@ -867,6 +987,33 @@
 
     </div>
 
+    <div class="section-title"><h2>花費</h2><div class="rule"></div></div>
+
+    <div class="cost-kpis">
+      <div class="kpi main"><div class="k-label">目前合計</div><div class="k-value" id="kpi-total">待補</div><div class="k-note" id="kpi-note">金額補上後自動計算</div></div>
+      <div class="kpi"><div class="k-label">每人平均（7 人）</div><div class="k-value" id="kpi-per">待補</div></div>
+      <div class="kpi"><div class="k-label">待補項目</div><div class="k-value" id="kpi-todo">7 項</div></div>
+    </div>
+
+    <div class="tips" style="padding-top:16px;">
+      <div class="food-table-wrap">
+      <table class="food-table cost-table" id="cost-table">
+        <tr><th>項目</th><th class="num">金額</th></tr>
+        <tr data-amount="" data-cur="TWD"><td class="sname">✈ 機票<small>華航 CI130／CI131 來回・7 人</small></td><td class="num"><span class="amt pending">待補</span><small class="per"></small></td></tr>
+        <tr data-amount="" data-cur="TWD"><td class="sname">🏨 住宿 1<small>E-us Naebo Station 402・2 晚</small></td><td class="num"><span class="amt pending">待補</span><small class="per"></small></td></tr>
+        <tr data-amount="" data-cur="TWD"><td class="sname">♨ 住宿 2<small>湖の栖・2 晚・2 間（含早晚餐）</small></td><td class="num"><span class="amt pending">待補</span><small class="per"></small></td></tr>
+        <tr data-amount="" data-cur="TWD"><td class="sname">🏔 住宿 3<small>Country Inn Milky House・3 晚</small></td><td class="num"><span class="amt pending">待補</span><small class="per"></small></td></tr>
+        <tr data-amount="" data-cur="TWD"><td class="sname">🏨 住宿 4<small>Zabo Hills 203・2 晚</small></td><td class="num"><span class="amt pending">待補</span><small class="per"></small></td></tr>
+        <tr data-amount="" data-cur="TWD"><td class="sname">🚗 租車<small>租車公司、天數、車型待補</small></td><td class="num"><span class="amt pending">待補</span><small class="per"></small></td></tr>
+        <tr data-amount="" data-cur="TWD"><td class="sname">🧾 其他<small>例如滑雪課程、雪具租借、油錢、停車費（之後可拆成多列）</small></td><td class="num"><span class="amt pending">待補</span><small class="per"></small></td></tr>
+        <tr class="price-total"><td class="fname">合計</td><td class="num"><span id="cost-sum">待補</span><small class="per" id="cost-sum-per"></small></td></tr>
+      </table>
+      </div>
+      <ul>
+        <li>金額陸續補上，合計和每人平均（÷7）會自動計算；台幣、日圓分開加總</li>
+      </ul>
+    </div>
+
     <div class="section-title"><h2>實用連結</h2><div class="rule"></div></div>
 
     <div class="transit-card">
@@ -898,10 +1045,11 @@
     <div class="tips">
       <ul>
         <li><b>去程早班機</b>：CI130 08:35 從桃園第二航廈起飛，建議提早 2 小時以上到機場</li>
-        <li><b>洞爺湖住宿</b>：湖の栖 <b>11/14 23:59</b>（當地時間）前可免費取消，行程若要變動請在這之前處理</li>
+        <li><b>洞爺湖住宿</b>：湖の栖<b>最晚 19:00 前</b> check-in；<b>11/14 23:59</b>（當地時間）前可免費取消，行程若要變動請在這之前處理</li>
         <li><b>二世谷住宿</b>：入住時段 15:00–21:00，訂房後要先和住宿方約定入住時間</li>
         <li><b>滑雪</b>：安努普利官網預告 11/28 開幕（未定），出發前確認雪場開放狀況，教練課程也記得先預約</li>
         <li><b>天氣</b>：11 月底～12 月初北海道已經入冬，札幌白天約 0～5°C、早晚常在零下，二世谷更冷、雪更多。帶保暖外套、手套、毛帽和防滑鞋；室內暖氣很強，建議洋蔥式穿搭</li>
+        <li><b>停車</b>：湖の栖、Milky House、Zabo Hills 都有免費停車，E-us Naebo Station 402 待確認</li>
         <li><b>退房時間</b>：札幌（E-us）與二世谷住宿都是 10:00 前退房，移動日前一晚先把行李收好</li>
       </ul>
     </div>
@@ -910,5 +1058,45 @@
 
   </div>
 
+<script>
+/* 花費：在 #cost-table 每一列的 data-amount 填金額（data-cur 用 TWD 或 JPY），合計與每人平均會自動算 */
+(function () {
+  var N = 7, SYM = { TWD: 'NT$', JPY: '¥' };
+  function fmt(cur, v) { return (SYM[cur] || cur + ' ') + Math.round(v).toLocaleString('en-US'); }
+  var rows = document.querySelectorAll('#cost-table tr[data-amount]');
+  var sums = {}, todo = 0;
+  Array.prototype.forEach.call(rows, function (r) {
+    var a = parseFloat((r.getAttribute('data-amount') || '').replace(/,/g, ''));
+    var cur = r.getAttribute('data-cur') || 'TWD';
+    if (isNaN(a)) { todo++; return; }
+    sums[cur] = (sums[cur] || 0) + a;
+    var amt = r.querySelector('.amt');
+    amt.textContent = fmt(cur, a);
+    amt.classList.remove('pending');
+    r.querySelector('.per').textContent = '每人 ' + fmt(cur, a / N);
+  });
+  var ORDER = ['TWD', 'JPY'];
+  var curs = Object.keys(sums).sort(function (a, b) {
+    return (ORDER.indexOf(a) + 1 || 99) - (ORDER.indexOf(b) + 1 || 99);
+  });
+  var has = curs.length > 0;
+  function lines(div, prefix) {
+    return curs.map(function (c, i) {
+      return '<span class="nb">' + (i ? '＋ ' : '') + (prefix || '') + fmt(c, sums[c] / div) + '</span>';
+    }).join('<br>');
+  }
+  if (curs.length > 1) {
+    document.getElementById('kpi-total').classList.add('multi');
+    document.getElementById('kpi-per').classList.add('multi');
+  }
+  document.getElementById('cost-sum').innerHTML = has ? lines(1) : '待補';
+  document.getElementById('cost-sum-per').innerHTML = has ? lines(N, '每人 ') : '';
+  document.getElementById('kpi-total').innerHTML = has ? lines(1) : '待補';
+  document.getElementById('kpi-per').innerHTML = has ? lines(N) : '待補';
+  document.getElementById('kpi-todo').textContent = todo + ' 項';
+  document.getElementById('kpi-note').textContent =
+    !has ? '金額補上後自動計算' : (todo ? '還有 ' + todo + ' 項未計入' : '所有項目都已計入');
+})();
+</script>
 </body>
 </html>
