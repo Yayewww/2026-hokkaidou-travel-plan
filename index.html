@@ -997,7 +997,7 @@
     <div class="cost-kpis">
       <div class="kpi main"><div class="k-label">目前合計</div><div class="k-value" id="kpi-total">待補</div><div class="k-note" id="kpi-note">金額補上後自動計算</div></div>
       <div class="kpi"><div class="k-label">每人平均（7 人）</div><div class="k-value" id="kpi-per">待補</div></div>
-      <div class="kpi"><div class="k-label">暫估（未付款）</div><div class="k-value" id="kpi-est">無</div><div class="k-note" id="kpi-est-note"></div></div>
+      <div class="kpi"><div class="k-label">付款狀態</div><div class="k-value" id="kpi-est">全部已付</div><div class="k-note" id="kpi-est-note"></div></div>
     </div>
 
     <div class="tips" style="padding-top:16px;">
@@ -1005,10 +1005,10 @@
       <table class="food-table cost-table" id="cost-table">
         <tr><th>項目</th><th class="num">金額</th></tr>
         <tr data-amount="174678" data-cur="TWD"><td class="sname">✈ 機票<small>華航 CI130／CI131 來回・7 人</small></td><td class="num"><span class="amt pending">待補</span><small class="per"></small></td></tr>
-        <tr data-amount="12740" data-cur="TWD"><td class="sname">🏨 住宿 1<small>E-us Naebo Station 402・2 晚・已付款</small></td><td class="num"><span class="amt pending">待補</span><small class="per"></small></td></tr>
+        <tr data-amount="12740" data-cur="TWD"><td class="sname">🏨 住宿 1<small>E-us Naebo Station 402・2 晚</small></td><td class="num"><span class="amt pending">待補</span><small class="per"></small></td></tr>
         <tr data-amount="71943" data-cur="TWD" data-pax="4"><td class="sname">♨ 住宿 2・4 人房<small>湖の栖・2 晚・含早晚餐・4 人平分</small></td><td class="num"><span class="amt pending">待補</span><small class="per"></small></td></tr>
         <tr data-amount="48622" data-cur="TWD" data-pax="3"><td class="sname">♨ 住宿 2・3 人房<small>湖の栖・2 晚・含早晚餐・3 人平分</small></td><td class="num"><span class="amt pending">待補</span><small class="per"></small></td></tr>
-        <tr data-amount="40740" data-cur="TWD"><td class="sname">🏔 住宿 3<small>Milky House・3 晚・已付款</small></td><td class="num"><span class="amt pending">待補</span><small class="per"></small></td></tr>
+        <tr data-amount="40740" data-cur="TWD"><td class="sname">🏔 住宿 3<small>Milky House・3 晚</small></td><td class="num"><span class="amt pending">待補</span><small class="per"></small></td></tr>
         <tr data-amount="20055" data-cur="TWD"><td class="sname">🏨 住宿 4<small>Zabo Hills 203・2 晚</small></td><td class="num"><span class="amt pending">待補</span><small class="per"></small></td></tr>
         <tr data-amount="46921" data-cur="TWD"><td class="sname">🚗 租車<small>每人 NT$6,703 × 7 人</small></td><td class="num"><span class="amt pending">待補</span><small class="per"></small></td></tr>
         <tr data-amount="40320" data-cur="TWD"><td class="sname">⛷ 滑雪教練<small>每人 NT$5,760 × 7 人</small></td><td class="num"><span class="amt pending">待補</span><small class="per"></small></td></tr>
@@ -1017,8 +1017,7 @@
       </div>
       <ul>
         <li>每人金額：湖の栖按各房人數平分，其他項目 7 人平分；合計下面的每人金額是 7 人平均</li>
-        <li>E-us、Milky House 已付款：兩間合計 NT$53,480，每人 NT$7,640</li>
-        <li>滑雪教練先以 7 人都上課計算</li>
+        <li>E-us、Milky House 兩間合計 NT$53,480，每人 NT$7,640</li>
       </ul>
     </div>
 
@@ -1067,7 +1066,7 @@
   </div>
 
 <script>
-/* 花費：#cost-table 每一列填 data-amount（data-cur 用 TWD 或 JPY；data-pax＝平分人數，預設 7；data-est＝暫估），合計與每人金額會自動算 */
+/* 花費：#cost-table 每一列填 data-amount（data-cur 用 TWD 或 JPY；data-pax＝平分人數，預設 7；data-est＝暫估、還沒付款），合計、每人金額與付款狀態會自動算 */
 (function () {
   var N = 7, SYM = { TWD: 'NT$', JPY: '¥' }, ORDER = ['TWD', 'JPY'];
   function fmt(cur, v) { return (SYM[cur] || cur + ' ') + Math.round(v).toLocaleString('en-US'); }
@@ -1105,13 +1104,12 @@
     document.getElementById('kpi-total').classList.add('multi');
     document.getElementById('kpi-per').classList.add('multi');
   }
-  if (curs(ests).length > 1) document.getElementById('kpi-est').classList.add('multi');
   document.getElementById('cost-sum').innerHTML = has ? lines(sums, 1) : '待補';
   document.getElementById('cost-sum-per').innerHTML = has ? lines(sums, N, '每人 ') : '';
   document.getElementById('kpi-total').innerHTML = has ? lines(sums, 1) : '待補';
   document.getElementById('kpi-per').innerHTML = has ? lines(sums, N) : '待補';
-  document.getElementById('kpi-est').innerHTML = estN ? lines(ests, 1) : '無';
-  document.getElementById('kpi-est-note').textContent = estN ? estN + ' 筆，付款後更新' : '都是實際金額';
+  document.getElementById('kpi-est').textContent = estN ? estN + ' 項未付' : '全部已付';
+  document.getElementById('kpi-est-note').innerHTML = estN ? '暫估 ' + lines(ests, 1) : rows.length + ' 項都已付款';
   var note = !has ? '金額補上後自動計算' : (todo ? '還有 ' + todo + ' 項未計入' : '所有項目都已計入');
   if (has && estN) note += '（含暫估）';
   document.getElementById('kpi-note').textContent = note;
