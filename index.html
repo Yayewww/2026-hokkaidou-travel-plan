@@ -395,6 +395,40 @@
   .food-table td.nw, .food-table th.nw{white-space:nowrap;}
   .food-table td.sname{font-weight:700; color:var(--indigo-deep);}
   .food-table td.sname small{display:block; font-weight:400; color:#8a8171; font-size:12px; margin-top:2px;}
+
+  /* ---------- PRE-DEPARTURE CHECKLIST ---------- */
+  .checklist{background:#fffdf8; border:1px solid #e7ddc3; border-radius:14px; padding:18px 20px 4px; scroll-margin-top:72px;}
+  .ck-head{display:flex; align-items:flex-end; justify-content:space-between; gap:12px;}
+  .ck-label{display:block; font-size:12px; font-weight:700; color:#8a8171; letter-spacing:.04em;}
+  .ck-count{font-size:15px; font-weight:700; color:#a49b86; font-variant-numeric:tabular-nums;}
+  .ck-count b{font-size:26px; line-height:1.3; color:var(--indigo-deep);}
+  .ck-status{font-size:13px; font-weight:700; color:#8a8171; padding-bottom:5px; text-align:right;}
+  .checklist.all-done .ck-status{color:var(--vermillion);}
+  .ck-bar{height:6px; border-radius:999px; background:var(--paper-deep); overflow:hidden; margin:8px 0 4px;}
+  .ck-bar span{display:block; width:0; height:100%; border-radius:inherit; background:var(--vermillion);}
+  .ck-list{list-style:none; margin:0; padding:0;}
+  .ck-list li + li{border-top:1px dashed #e2d8bd;}
+  .ck-item{display:flex; align-items:flex-start; gap:12px; padding:13px 0; cursor:pointer; position:relative; -webkit-tap-highlight-color:transparent;}
+  .ck-item input{position:absolute; top:13px; left:0; width:24px; height:24px; margin:0; opacity:0;}
+  .ck-box{flex-shrink:0; position:relative; width:24px; height:24px; border:2px solid var(--line); border-radius:7px; background:#fff;}
+  .ck-box::after{content:""; position:absolute; top:0; right:0; bottom:0; left:0; transform:scale(0);
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.3 3.3L15 7' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat;}
+  .ck-item input:checked + .ck-box{background-color:var(--vermillion); border-color:var(--vermillion);}
+  .ck-item input:checked + .ck-box::after{transform:scale(1);}
+  .ck-item input:focus-visible + .ck-box{outline:2px solid var(--indigo); outline-offset:2px;}
+  @media (hover:hover){ .ck-item:hover .ck-box{border-color:var(--vermillion);} }
+  .ck-text{display:flex; flex-direction:column; gap:1px; min-width:0;}
+  .ck-name{font-size:15px; font-weight:700; line-height:1.6; color:var(--indigo-deep);}
+  .ck-note{font-size:12.5px; line-height:1.6; color:#8a8171;}
+  .ck-note.warn{font-weight:700; color:var(--vermillion);}
+  .ck-item input:checked ~ .ck-text .ck-name{color:#a49b86; text-decoration:line-through; text-decoration-color:rgba(187,68,48,.55);}
+  .ck-item input:checked ~ .ck-text .ck-note{color:#b3aa95; font-weight:400;}
+  .ck-extra{padding:0 0 13px 36px; margin-top:-5px;}
+  .ck-ready .ck-box{transition:background-color .15s ease, border-color .15s ease;}
+  .ck-ready .ck-box::after{transition:transform .22s cubic-bezier(.34,1.56,.64,1);}
+  .ck-ready .ck-bar span{transition:width .3s ease;}
+  @media (prefers-reduced-motion:reduce){ .ck-ready .ck-box, .ck-ready .ck-box::after, .ck-ready .ck-bar span{transition:none;} }
+  .ck-foot{margin-top:10px; font-size:12px; color:#a49b86; text-align:center;}
 </style>
 </head>
 <body>
@@ -459,6 +493,29 @@
   </div>
 
   <div class="wrap">
+
+    <div class="section-title"><h2>出發前檢查清單</h2><div class="rule"></div></div>
+
+    <div class="checklist" id="checklist">
+      <div class="ck-head">
+        <div><span class="ck-label">準備進度</span><span class="ck-count"><b id="ck-done">0</b> / <span id="ck-total">7</span></span></div>
+        <div class="ck-status" id="ck-status" aria-live="polite">還差 7 項</div>
+      </div>
+      <div class="ck-bar" aria-hidden="true"><span id="ck-fill"></span></div>
+      <ul class="ck-list">
+        <li><label class="ck-item"><input type="checkbox" data-key="insurance" autocomplete="off"><span class="ck-box" aria-hidden="true"></span><span class="ck-text"><span class="ck-name">旅遊保險</span><span class="ck-note">這趟有滑雪和自駕，確認保單有涵蓋</span></span></label></li>
+        <li><label class="ck-item"><input type="checkbox" data-key="ski-gear" autocomplete="off"><span class="ck-box" aria-hidden="true"></span><span class="ck-text"><span class="ck-name">滑雪用具</span></span></label></li>
+        <li><label class="ck-item"><input type="checkbox" data-key="license" autocomplete="off"><span class="ck-box" aria-hidden="true"></span><span class="ck-text"><span class="ck-name">駕照譯本＋駕照正本</span><span class="ck-note warn">兩個都要帶！！少一個就不能開車</span></span></label></li>
+        <li><label class="ck-item"><input type="checkbox" data-key="esim" autocomplete="off"><span class="ck-box" aria-hidden="true"></span><span class="ck-text"><span class="ck-name">eSIM、網卡</span></span></label></li>
+        <li><label class="ck-item"><input type="checkbox" data-key="passport" autocomplete="off"><span class="ck-box" aria-hidden="true"></span><span class="ck-text"><span class="ck-name">護照</span><span class="ck-note warn">注意是否過期</span></span></label></li>
+        <li><label class="ck-item"><input type="checkbox" data-key="cash" autocomplete="off"><span class="ck-box" aria-hidden="true"></span><span class="ck-text"><span class="ck-name">現金</span></span></label></li>
+        <li>
+          <label class="ck-item"><input type="checkbox" data-key="vjw" autocomplete="off"><span class="ck-box" aria-hidden="true"></span><span class="ck-text"><span class="ck-name">Visit Japan Web 填入境資料</span><span class="ck-note">先填好入境審查和海關申報，入境時出示 <span class="nb">QR Code</span>，通關更快</span></span></label>
+          <div class="ck-extra"><a class="pin" href="https://services.digital.go.jp/zh-cmn-hant/visit-japan-web/" target="_blank" rel="noopener">🔗 Visit Japan Web 官網</a></div>
+        </li>
+      </ul>
+    </div>
+    <div class="ck-foot">勾選紀錄只存在這台裝置的瀏覽器，不會同步給其他人，每個人勾自己的就好</div>
 
     <div class="section-title"><h2>住宿資訊</h2><div class="rule"></div></div>
 
@@ -1113,6 +1170,45 @@
   var note = !has ? '金額補上後自動計算' : (todo ? '還有 ' + todo + ' 項未計入' : '所有項目都已計入');
   if (has && estN) note += '（含暫估）';
   document.getElementById('kpi-note').textContent = note;
+})();
+
+/* 出發前檢查清單：勾選狀態存在這台裝置的 localStorage（不會同步給別人）；新增項目時給一個新的 data-key 就好 */
+(function () {
+  var KEY = 'hokkaido-2026-checklist';
+  var card = document.getElementById('checklist');
+  var boxes = card.querySelectorAll('input[data-key]');
+  function load() {
+    try {
+      var o = JSON.parse(localStorage.getItem(KEY));
+      return o && typeof o === 'object' ? o : {};
+    } catch (e) { return {}; }
+  }
+  function save(o) {
+    try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {}
+  }
+  function render() {
+    var done = 0, total = boxes.length;
+    Array.prototype.forEach.call(boxes, function (b) { if (b.checked) done++; });
+    document.getElementById('ck-done').textContent = done;
+    document.getElementById('ck-total').textContent = total;
+    document.getElementById('ck-fill').style.width = (total ? done / total * 100 : 0) + '%';
+    document.getElementById('ck-status').textContent = done === total ? '全部完成，準備出發 ✈' : '還差 ' + (total - done) + ' 項';
+    card.classList.toggle('all-done', done === total);
+  }
+  var saved = load();
+  Array.prototype.forEach.call(boxes, function (b) {
+    var k = b.getAttribute('data-key');
+    b.checked = saved[k] === true;
+    b.addEventListener('change', function () {
+      var o = load();  // 每次重新讀，開兩個分頁也不會互相蓋掉
+      if (b.checked) o[k] = true; else delete o[k];
+      save(o);
+      render();
+    });
+  });
+  render();
+  void card.offsetWidth;  // 先套用還原的勾選，再開動畫，重新整理時才不會每格都跳一次
+  card.classList.add('ck-ready');
 })();
 </script>
 </body>
