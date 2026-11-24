@@ -430,6 +430,58 @@
   .ck-ready .ck-bar span{transition:width .3s ease;}
   @media (prefers-reduced-motion:reduce){ .ck-ready .ck-box, .ck-ready .ck-box::after, .ck-ready .ck-bar span{transition:none;} }
   .ck-foot{margin-top:10px; font-size:12px; color:#a49b86; text-align:center;}
+
+  /* ---------- 目錄（左側快速跳轉）：寬螢幕固定在內容左邊；手機由左下角「目錄」按鈕從左邊滑出 ---------- */
+  #overview, .section-title, .stop{scroll-margin-top:20px;}
+  .toc-fab, .toc{display:none;}
+  .toc-ready .toc-fab{
+    display:inline-flex; align-items:center; gap:6px;
+    position:fixed; left:16px; bottom:calc(16px + env(safe-area-inset-bottom, 0px)); z-index:40;
+    padding:11px 17px; border:none; border-radius:999px; cursor:pointer;
+    background:var(--indigo); color:#F4EFE3;
+    font:700 14px/1 'Noto Sans TC', sans-serif; letter-spacing:.08em;
+    box-shadow:0 6px 18px rgba(22,40,63,0.28);
+  }
+  .toc-overlay{position:fixed; inset:0; z-index:45; background:rgba(22,40,63,0.38);}
+  .toc-ready .toc{
+    display:block; position:fixed; top:0; bottom:0; left:0; z-index:50;
+    width:min(300px, 84vw); overflow-y:auto; overscroll-behavior:contain;
+    background:var(--paper); box-shadow:6px 0 24px rgba(22,40,63,0.22);
+    padding:calc(18px + env(safe-area-inset-top, 0px)) 12px calc(24px + env(safe-area-inset-bottom, 0px));
+    transform:translateX(-105%); visibility:hidden;
+    transition:transform .25s ease, visibility 0s linear .25s;
+  }
+  .toc-ready .toc.open{transform:none; visibility:visible; transition:transform .25s ease, visibility 0s;}
+  .toc-lock, .toc-lock body{overflow:hidden;}
+  .toc-head{display:flex; align-items:center; justify-content:space-between; margin:0 6px 10px;}
+  .toc-title{font-size:12px; font-weight:700; letter-spacing:.28em; color:var(--vermillion);}
+  .toc-close{border:none; background:none; cursor:pointer; font-size:18px; line-height:1; color:var(--indigo-deep); padding:6px 8px; border-radius:8px;}
+  .toc-list{list-style:none; margin:0; padding:0;}
+  .toc-list a{
+    display:flex; align-items:center; gap:8px; padding:7px 10px; margin:1px 0;
+    border-left:3px solid transparent; border-radius:8px;
+    color:var(--indigo-deep); text-decoration:none; font-size:14px; font-weight:700; line-height:1.4;
+  }
+  .toc-list .toc-sub a{font-size:13px; font-weight:500; color:var(--ink); padding:5px 10px 5px 14px;}
+  .toc-list a.active{background:#fffdf8; border-left-color:var(--vermillion); color:var(--vermillion);}
+  .toc-num{
+    flex:none; width:20px; height:20px; border-radius:50%;
+    background:var(--indigo); color:#F4EFE3; text-align:center;
+    font:700 11px/20px 'Noto Serif TC', serif;
+  }
+  .toc-list a.relax .toc-num{background:var(--vermillion);}
+  .toc-date{color:#8a8171; font-size:12px; font-variant-numeric:tabular-nums; margin-right:4px;}
+  @media (hover:hover){ .toc-list a:hover{background:var(--paper-deep);} .toc-close:hover{background:var(--paper-deep);} }
+  @media (prefers-reduced-motion:reduce){ .toc-ready .toc, .toc-ready .toc.open{transition:none;} }
+  @media (min-width:1264px){
+    .toc-ready .toc-fab, .toc-overlay, .toc-close{display:none !important;}
+    .toc-ready .toc{
+      top:20px; bottom:auto; left:calc(50% - 616px); width:212px; max-height:calc(100vh - 40px);
+      transform:none; visibility:visible; transition:none;
+      background:#fffdf8; border:1px solid #e7ddc3; border-radius:14px;
+      box-shadow:0 10px 30px rgba(22,40,63,0.14); padding:16px 10px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -443,7 +495,7 @@
     </div>
   </div>
 
-  <div class="tickets">
+  <div class="tickets" id="overview">
     <div class="ticket">
       <div class="tlabel">✈ 去程 CI130</div>
       <h3>桃園 → 新千歲</h3>
@@ -495,7 +547,7 @@
 
   <div class="wrap">
 
-    <div class="section-title"><h2>出發前檢查清單</h2><div class="rule"></div></div>
+    <div class="section-title" id="sec-prep"><h2>出發前檢查清單</h2><div class="rule"></div></div>
 
     <div class="checklist" id="checklist">
       <div class="ck-head">
@@ -518,7 +570,7 @@
     </div>
     <div class="ck-foot">勾選紀錄只存在這台裝置的瀏覽器，不會同步給其他人，每個人勾自己的就好</div>
 
-    <div class="section-title"><h2>住宿資訊</h2><div class="rule"></div></div>
+    <div class="section-title" id="sec-stay"><h2>住宿資訊</h2><div class="rule"></div></div>
 
     <div class="tips">
       <div class="food-table-wrap">
@@ -663,7 +715,7 @@
     </div>
     <div style="margin-top:12px; font-size:12px; color:#a49b86; text-align:center;">地址、電話、停車等資訊整理自訂房網站，實際以訂房確認信為準</div>
 
-    <div class="section-title"><h2>十日路線</h2><div class="rule"></div></div>
+    <div class="section-title" id="sec-route"><h2>十日路線</h2><div class="rule"></div></div>
 
     <div class="route-strip">
       <div class="rs-node air"><b>新千歲</b><span>11/26 抵達</span></div>
@@ -685,7 +737,7 @@
     <div class="line-wrap">
 
       <!-- ===== DAY 1 ===== -->
-      <div class="stop">
+      <div class="stop" id="day1">
         <div class="stop-marker">1</div>
         <details class="day">
           <summary>
@@ -732,7 +784,7 @@
       </div>
 
       <!-- ===== DAY 2 ===== -->
-      <div class="stop">
+      <div class="stop" id="day2">
         <div class="stop-marker">2</div>
         <details class="day">
           <summary>
@@ -762,7 +814,7 @@
       </div>
 
       <!-- ===== DAY 3 ===== -->
-      <div class="stop">
+      <div class="stop" id="day3">
         <div class="stop-marker">3</div>
         <details class="day">
           <summary>
@@ -809,7 +861,7 @@
       </div>
 
       <!-- ===== DAY 4 ===== -->
-      <div class="stop relax">
+      <div class="stop relax" id="day4">
         <div class="stop-marker">4</div>
         <details class="day">
           <summary>
@@ -844,7 +896,7 @@
       </div>
 
       <!-- ===== DAY 5 ===== -->
-      <div class="stop">
+      <div class="stop" id="day5">
         <div class="stop-marker">5</div>
         <details class="day">
           <summary>
@@ -892,7 +944,7 @@
       </div>
 
       <!-- ===== DAY 6 ===== -->
-      <div class="stop">
+      <div class="stop" id="day6">
         <div class="stop-marker">6</div>
         <details class="day">
           <summary>
@@ -924,7 +976,7 @@
       </div>
 
       <!-- ===== DAY 7 ===== -->
-      <div class="stop">
+      <div class="stop" id="day7">
         <div class="stop-marker">7</div>
         <details class="day">
           <summary>
@@ -945,7 +997,7 @@
       </div>
 
       <!-- ===== DAY 8 ===== -->
-      <div class="stop">
+      <div class="stop" id="day8">
         <div class="stop-marker">8</div>
         <details class="day">
           <summary>
@@ -1020,7 +1072,7 @@
       </div>
 
       <!-- ===== DAY 9 ===== -->
-      <div class="stop">
+      <div class="stop" id="day9">
         <div class="stop-marker">9</div>
         <details class="day">
           <summary>
@@ -1055,7 +1107,7 @@
       </div>
 
       <!-- ===== DAY 10 ===== -->
-      <div class="stop">
+      <div class="stop" id="day10">
         <div class="stop-marker">10</div>
         <details class="day">
           <summary>
@@ -1091,7 +1143,7 @@
 
     </div>
 
-    <div class="section-title"><h2>花費</h2><div class="rule"></div></div>
+    <div class="section-title" id="sec-cost"><h2>花費</h2><div class="rule"></div></div>
 
     <div class="cost-kpis">
       <div class="kpi main"><div class="k-label">目前合計</div><div class="k-value" id="kpi-total">待補</div><div class="k-note" id="kpi-note">金額補上後自動計算</div></div>
@@ -1123,7 +1175,7 @@
       </ul>
     </div>
 
-    <div class="section-title"><h2>實用連結</h2><div class="rule"></div></div>
+    <div class="section-title" id="sec-links"><h2>實用連結</h2><div class="rule"></div></div>
 
     <div class="transit-card">
       <h3>🔗 旅途中常用</h3>
@@ -1149,7 +1201,7 @@
       </div>
     </div>
 
-    <div class="section-title"><h2>貼心提醒</h2><div class="rule"></div></div>
+    <div class="section-title" id="sec-tips"><h2>貼心提醒</h2><div class="rule"></div></div>
 
     <div class="tips">
       <ul>
@@ -1166,6 +1218,13 @@
     <footer>❄ 2026 北海道・7 人同行 ❄</footer>
 
   </div>
+
+<button class="toc-fab" type="button" aria-controls="toc" aria-expanded="false">☰ 目錄</button>
+<div class="toc-overlay" hidden></div>
+<nav class="toc" id="toc" aria-label="目錄">
+  <div class="toc-head"><span class="toc-title">目錄</span><button class="toc-close" type="button" aria-label="關閉目錄">✕</button></div>
+  <ul class="toc-list"></ul>
+</nav>
 
 <script>
 /* 花費：#cost-table 每一列填 data-amount（data-cur 用 TWD 或 JPY；data-pax＝平分人數，預設 7；data-est＝暫估、還沒付款），合計、每人金額與付款狀態會自動算 */
@@ -1254,6 +1313,91 @@
   render();
   void card.offsetWidth;  // 先套用還原的勾選，再開動畫，重新整理時才不會每格都跳一次
   card.classList.add('ck-ready');
+})();
+/* 目錄：從有 id 的區塊（總覽、各大標、Day 1–10）自動產生；點 Day 會展開那天。寬螢幕固定在左邊，窄螢幕從左下角按鈕打開 */
+(function () {
+  var toc = document.getElementById('toc');
+  var list = toc.querySelector('.toc-list');
+  var fab = document.querySelector('.toc-fab');
+  var overlay = document.querySelector('.toc-overlay');
+  var wide = window.matchMedia('(min-width:1264px)');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var items = [];
+  Array.prototype.forEach.call(document.querySelectorAll('#overview, .section-title[id], .stop[id]'), function (el) {
+    var li = document.createElement('li'), a = document.createElement('a');
+    a.href = '#' + el.id;
+    if (el.classList.contains('stop')) {
+      li.className = 'toc-sub';
+      if (el.classList.contains('relax')) a.className = 'relax';
+      var t = el.querySelector('.summary-text .title');
+      var num = document.createElement('span'), txt = document.createElement('span'), date = document.createElement('span');
+      num.className = 'toc-num'; num.textContent = el.querySelector('.stop-marker').textContent.trim();
+      date.className = 'toc-date'; date.textContent = el.querySelector('.summary-text .date').textContent.replace(/（.*?）/, '').trim();
+      txt.appendChild(date);
+      txt.appendChild(document.createTextNode((t.firstChild && t.firstChild.nodeType === 3 ? t.firstChild : t).textContent.trim()));
+      a.appendChild(num); a.appendChild(txt);
+    } else {
+      a.textContent = el.id === 'overview' ? '航班・住宿總覽' : el.textContent.trim();
+    }
+    li.appendChild(a); list.appendChild(li);
+    items.push({ a: a, el: el });
+  });
+  document.documentElement.classList.add('toc-ready');
+
+  function setOpen(open) {
+    toc.classList.toggle('open', open);
+    overlay.hidden = !open;
+    fab.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.documentElement.classList.toggle('toc-lock', open);
+    if (open) {
+      var cur = toc.querySelector('a.active') || toc.querySelector('a');
+      toc.scrollTop = Math.max(0, cur.offsetTop - toc.clientHeight / 3);
+      cur.focus({ preventScroll: true });
+    }
+  }
+  function go(el, smooth) {
+    var d = el.querySelector('details.day');
+    if (d) d.open = true;
+    el.scrollIntoView({ behavior: smooth && !reduce.matches ? 'smooth' : 'auto', block: 'start' });
+  }
+  fab.addEventListener('click', function () { setOpen(true); });
+  toc.querySelector('.toc-close').addEventListener('click', function () { setOpen(false); fab.focus(); });
+  overlay.addEventListener('click', function () { setOpen(false); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && toc.classList.contains('open')) { setOpen(false); fab.focus(); }
+  });
+  if (wide.addEventListener) wide.addEventListener('change', function () { setOpen(false); });
+  list.addEventListener('click', function (e) {
+    var a = e.target.closest('a');
+    var el = a && document.getElementById(a.getAttribute('href').slice(1));
+    if (!el) return;
+    e.preventDefault();
+    setOpen(false);
+    go(el, true);
+    if (history.replaceState) history.replaceState(null, '', '#' + el.id);
+  });
+
+  /* 捲動時標出目前看到的區塊 */
+  var ticking = false;
+  function spy() {
+    ticking = false;
+    var cur = null, line = window.innerHeight * 0.3;
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].el.getBoundingClientRect().top <= line) cur = items[i]; else break;
+    }
+    items.forEach(function (it) { it.a.classList.toggle('active', it === cur); });
+    if (cur && wide.matches) {
+      var top = cur.a.offsetTop, hgt = toc.clientHeight;
+      if (top < toc.scrollTop || top + cur.a.offsetHeight > toc.scrollTop + hgt) toc.scrollTop = top - hgt / 3;
+    }
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(spy); } }, { passive: true });
+  window.addEventListener('resize', spy);
+
+  /* 直接帶 #day5 這類網址打開時，也自動展開那一天 */
+  var start = location.hash && document.getElementById(location.hash.slice(1));
+  if (start && start.classList.contains('stop')) go(start, false);
+  spy();
 })();
 </script>
 </body>
