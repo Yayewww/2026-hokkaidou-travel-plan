@@ -176,7 +176,7 @@
   .day-body ul{margin:14px 0 0; padding-left:20px;}
   .day-body li{margin-bottom:9px; font-size:14.5px;}
   .day-body li b{color:var(--indigo-deep);}
-  .day-body .highlight{
+  .day-body .highlight, .drive-box .highlight{
     margin-top:14px; padding:12px 14px; background:var(--paper-deep);
     border-left:3px solid var(--vermillion); border-radius:4px; font-size:13.5px;
   }
@@ -353,6 +353,9 @@
   .rs-node.air span{color:#8a8171;}
   .rs-arrow{color:var(--indigo); font-weight:700; font-size:14px;}
   .rs-note{flex-basis:100%; text-align:center; font-size:12px; color:#8a8171; margin-top:2px;}
+  .rs-arrow{display:inline-flex; flex-direction:column; align-items:center; line-height:1.15;}
+  .rs-arrow small{font-size:10.5px; font-weight:500; color:#8a8171; white-space:nowrap; margin-top:2px;}
+  .drive-box{margin:-6px 0 28px;}
 
   .todo{
     margin-top:4px; padding:12px 14px; border:1.5px dashed var(--line);
@@ -719,19 +722,35 @@
 
     <div class="route-strip">
       <div class="rs-node air"><b>新千歲</b><span>11/26 抵達</span></div>
-      <span class="rs-arrow">→</span>
+      <span class="rs-arrow">→<small>50分</small></span>
       <div class="rs-node"><b>札幌</b><span>2 晚</span></div>
-      <span class="rs-arrow">→</span>
+      <span class="rs-arrow">→<small>2小時</small></span>
       <div class="rs-node onsen"><b>洞爺湖</b><span>2 晚</span></div>
-      <span class="rs-arrow">→</span>
+      <span class="rs-arrow">→<small>1小時</small></span>
       <div class="rs-node snow"><b>二世谷</b><span>3 晚</span></div>
-      <span class="rs-arrow">→</span>
+      <span class="rs-arrow">→<small>1小時40分</small></span>
       <div class="rs-node onsen"><b>小樽</b><span>順遊</span></div>
-      <span class="rs-arrow">→</span>
+      <span class="rs-arrow">→<small>50分</small></span>
       <div class="rs-node"><b>札幌</b><span>2 晚</span></div>
-      <span class="rs-arrow">→</span>
+      <span class="rs-arrow">→<small>55分</small></span>
       <div class="rs-node air"><b>新千歲</b><span>12/5 賦歸</span></div>
-      <div class="rs-note">點開每一天看詳細內容</div>
+      <div class="rs-note">箭頭下是開車時間（一般路況）・點開每一天看詳細內容</div>
+    </div>
+
+    <div class="drive-box">
+      <div class="day-sec-label"><span class="ico">🚗</span><span class="txt">大點之間的車程</span><span class="line"></span></div>
+      <div class="food-table-wrap">
+      <table class="food-table">
+        <tr><th>區間</th><th class="nw">開車</th></tr>
+        <tr><td class="sname">新千歲機場 → 札幌（E-us）<small>47 km・道央自動車道</small></td><td class="nw">約 50 分</td></tr>
+        <tr><td class="sname">札幌 → 洞爺湖<small>151 km・道央自動車道（Day 3 順路經過白老）</small></td><td class="nw">約 2 小時</td></tr>
+        <tr><td class="sname">洞爺湖 → 二世谷（Milky House）<small>52 km</small></td><td class="nw">約 1 小時</td></tr>
+        <tr><td class="sname">二世谷 → 小樽運河<small>77 km・國道 5 號</small></td><td class="nw">約 1 小時 40 分</td></tr>
+        <tr><td class="sname">小樽 → 札幌（Zabo Hills）<small>39 km・札樽自動車道</small></td><td class="nw">約 50 分</td></tr>
+        <tr><td class="sname">札幌（Zabo Hills）→ 新千歲機場<small>52 km・道央自動車道</small></td><td class="nw">約 55 分</td></tr>
+      </table>
+      </div>
+      <div class="highlight">❄️ 以上是 Google 地圖一般路況的時間。這季節可能下雪、路面結冰，開車時間抓<b>多 2～3 成</b>比較保險；12 月初 16:00 左右就天黑，長途盡量白天開完</div>
     </div>
 
     <div class="line-wrap">
@@ -761,9 +780,16 @@
               </div>
             </div>
             <div class="day-section">
+              <div class="day-sec-label"><span class="ico">🚗</span><span class="txt">機場 → 住處</span><span class="line"></span></div>
+              <ul>
+                <li>13:15 落地 → 入境、領行李約 1 小時 → 搭接駁車去租車公司取車約 45 分</li>
+                <li>新千歲機場 → E-us：開車約 <b>50 分鐘</b>（47 km，道央自動車道）</li>
+                <li>預估 <b>16:00 前後</b>抵達住處</li>
+              </ul>
+            </div>
+            <div class="day-section">
               <div class="day-sec-label"><span class="ico">🏨</span><span class="txt">入住</span><span class="line"></span></div>
               <ul>
-                <li>入境、領行李後前往札幌市區</li>
                 <li><b>E-us Naebo Station 402</b>：Check-in <b>15:00–22:00</b>，1 間公寓、7 位成人，住 2 晚（11/26–11/28）</li>
               </ul>
             </div>
@@ -833,7 +859,12 @@
             </div>
             <div class="day-section">
               <div class="day-sec-label"><span class="ico">🚗</span><span class="txt">移動</span><span class="line"></span></div>
-              <div class="todo">札幌 → 洞爺湖，沿途行程待安排</div>
+              <ul>
+                <li>札幌 → 洞爺湖直達：開車約 <b>2 小時</b>（151 km，道央自動車道）。另一條國道 230 號翻中山峠約 2 小時 15 分，冬天山路容易結冰，走高速比較保險</li>
+                <li>順路吃白老美食：札幌 → Uemura 約 1 小時 20 分 → かに王 約 20 分 → 洞爺湖 約 55 分，開車共約 2 小時 30 分</li>
+                <li>10:00 退房出發，兩家都去、各待 45 分～1 小時的話，預估 <b>14:00～14:30</b> 到湖の栖（15:00 起可以 check-in）</li>
+              </ul>
+              <div class="todo">沿途其他行程待安排</div>
             </div>
             <div class="day-section">
               <div class="day-sec-label"><span class="ico">🍽️</span><span class="txt">沿途美食（白老）</span><span class="line"></span></div>
@@ -911,6 +942,13 @@
               <div class="day-sec-label"><span class="ico">🧳</span><span class="txt">退房</span><span class="line"></span></div>
               <ul>
                 <li><b>The Lake Suite 湖の栖</b> 退房，前往二世谷</li>
+              </ul>
+            </div>
+            <div class="day-section">
+              <div class="day-sec-label"><span class="ico">🚗</span><span class="txt">移動</span><span class="line"></span></div>
+              <ul>
+                <li>洞爺湖 → 二世谷（Milky House 主館）：開車約 <b>1 小時</b>（52 km）</li>
+                <li>11:00 退房直接開過去，約 <b>12:00</b> 就到；Milky House <b>15:00</b> 才能入住，中間可以先吃午餐</li>
               </ul>
             </div>
             <div class="day-section">
@@ -1018,8 +1056,8 @@
                 <line x1="90" y1="60" x2="200" y2="60" stroke="#243B55" stroke-width="2.5" marker-end="url(#arrow8)"/>
                 <line x1="300" y1="60" x2="410" y2="60" stroke="#243B55" stroke-width="2.5" marker-end="url(#arrow8)"/>
                 <line x1="510" y1="60" x2="620" y2="60" stroke="#243B55" stroke-width="2.5" marker-end="url(#arrow8)"/>
-                <text x="145" y="48" text-anchor="middle" fill="#8a8171" font-size="11" font-family="sans-serif">約90–120分</text>
-                <text x="565" y="48" text-anchor="middle" fill="#8a8171" font-size="11" font-family="sans-serif">約30–60分</text>
+                <text x="145" y="48" text-anchor="middle" fill="#8a8171" font-size="11" font-family="sans-serif">約1小時40分</text>
+                <text x="565" y="48" text-anchor="middle" fill="#8a8171" font-size="11" font-family="sans-serif">約50分</text>
 
                 <rect x="10" y="35" width="80" height="50" rx="10" fill="#243B55"/>
                 <text x="50" y="55" text-anchor="middle" fill="#F4EFE3" font-size="13" font-weight="700" font-family="sans-serif">二世谷</text>
@@ -1044,7 +1082,7 @@
               <div class="day-sec-label"><span class="ico">🧳</span><span class="txt">退房・移動</span><span class="line"></span></div>
               <ul>
                 <li><b>銀河住宿加早餐旅館</b>：<b>10:00 前</b>退房</li>
-                <li>二世谷 → 小樽：約 <b>90～120 分鐘</b></li>
+                <li>二世谷 → 小樽運河：開車約 <b>1 小時 40 分</b>（77 km，國道 5 號）；10:00 出發約 <b>11:40</b> 到小樽</li>
               </ul>
             </div>
             <div class="day-section">
@@ -1062,7 +1100,7 @@
             <div class="day-section">
               <div class="day-sec-label"><span class="ico">🏨</span><span class="txt">前往札幌・入住</span><span class="line"></span></div>
               <ul>
-                <li>小樽 → 札幌：約 <b>30～60 分鐘</b></li>
+                <li>小樽 → 札幌（Zabo Hills）：開車約 <b>50 分鐘</b>（39 km，札樽自動車道）；例如 15:30 離開小樽，約 <b>16:20</b> 到住處</li>
                 <li><b>Zabo Hills 203</b>（札幌），住 2 晚（12/3–12/5），7 位成人；Check-in <b>15:00–22:00</b>，要先告訴房東抵達時間</li>
               </ul>
               <div style="margin-top:8px;"><a class="pin" href="https://www.booking.com/Share-0KEf1W" target="_blank" rel="noopener">🔗 Booking.com 頁面</a></div>
@@ -1122,6 +1160,8 @@
               <div class="day-sec-label"><span class="ico">🧳</span><span class="txt">退房</span><span class="line"></span></div>
               <ul>
                 <li><b>Zabo Hills 203</b>：<b>10:00 前</b>退房，前往新千歲機場</li>
+                <li>札幌 → 新千歲機場：開車約 <b>55 分鐘</b>（52 km，道央自動車道）</li>
+                <li>還車前先加滿油，還車再搭接駁車到航廈約 30 分；10:00 出發的話約 <b>11:40</b> 到航廈，比建議的 12:40 早 1 小時</li>
               </ul>
             </div>
             <div class="day-section">
